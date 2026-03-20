@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تهنئة عيد</title>
+
+<style>
+
+/* منع أي بياض */
+html, body {
+  margin:0;
+  padding:0;
+  background:#000;
+  font-family:Tahoma;
+  overflow:hidden;
+  color:#fff;
+}
+
+/* طبقة الخلفية */
+.bg {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: radial-gradient(circle at top, #0b1a4a, #000);
+  z-index:-1;
+}
+
+/* نجوم */
+.star {
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  opacity:0;
+  animation: twinkle 2s infinite;
+}
+@keyframes twinkle {
+  0%,100%{opacity:0;}
+  50%{opacity:1;}
+}
+
+/* المستطيل */
+.box {
+  position:fixed;
+  bottom:-300px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:380px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(0,0,30,0.7);
+  backdrop-filter: blur(10px);
+  text-align:center;
+  animation: slideUp 1.5s forwards;
+  box-shadow:0 0 25px #00aaff;
+}
+
+@keyframes slideUp {
+  to {
+    bottom:50%;
+    transform:translate(-50%,50%);
+  }
+}
+
+/* النص */
+#text {
+  font-size:17px;
+  line-height:2;
+  white-space:pre-line;
+  min-height:140px;
+}
+
+/* زر */
+.btn-box {
+  margin-top:20px;
+  padding:10px;
+  border-radius:15px;
+  display:none;
+  background: linear-gradient(45deg,#00aaff,#ffffff);
+}
+.btn {
+  cursor:pointer;
+  font-weight:bold;
+  color:#000;
+}
+
+/* مودال بنفس الخلفية */
+.modal {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: radial-gradient(circle at top, #0b1a4a, #000);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* الصورة */
+.modal img {
+  width:75%;
+  max-width:280px;
+  border-radius:15px;
+  box-shadow:0 0 30px #00aaff;
+}
+
+/* اغلاق */
+.close {
+  margin-top:15px;
+  font-size:30px;
+  cursor:pointer;
+}
+
+/* تذييل */
+.footer {
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  font-size:14px;
+}
+.footer a {
+  color:#00aaff;
+  text-decoration:none;
+}
+
+/* العاب نارية */
+.firework {
+  position:absolute;
+  width:5px;
+  height:5px;
+  background:white;
+  border-radius:50%;
+  animation: explode 1s forwards;
+}
+@keyframes explode {
+  to {
+    transform:translate(var(--x),var(--y));
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div id="stars"></div>
+
+<div class="box">
+  <div id="text"></div>
+
+  <div class="btn-box">
+    <div class="btn" onclick="openModal()">اضغطي هنا</div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <img src="https://i.ibb.co/DPHWpq0x/301145-F1-ECC0-4-B96-B15-E-A1052286-C1-B6.png">
+  <div class="close" onclick="closeModal()">✕</div>
+</div>
+
+<div class="footer">
+  المطور <a href="https://Ali_3hme" target="_blank">عـــلـــي ¹</a>
+</div>
+
+<script>
+
+/* نجوم */
+for(let i=0;i<150;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.top=Math.random()*100+"%";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDelay=Math.random()*2+"s";
+  document.body.appendChild(s);
+}
+
+/* النص */
+let message = `كل عام وأنتِ بألف خير تييييييبا ✨
+ينعاد عليج بالصحة والسلامة ✨
+ويارب أشوفج دوم فرحانة ومحققة كل أمنياتج ✨
+عيدج مبارك وعساج من عواده ✨`;
+
+let i=0;
+
+function type(){
+  if(i < message.length){
+    document.getElementById("text").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(type, 35);
+  } else {
+    document.querySelector(".btn-box").style.display="block";
+  }
+}
+
+setTimeout(type,1200);
+
+/* فتح */
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+  fireworks();
+}
+
+/* اغلاق */
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+/* العاب نارية */
+function fireworks(){
+  for(let i=0;i<70;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.style.left=window.innerWidth/2+"px";
+    f.style.top=window.innerHeight/2+"px";
+
+    let x=(Math.random()-0.5)*300+"px";
+    let y=(Math.random()-0.5)*300+"px";
+
+    f.style.setProperty("--x",x);
+    f.style.setProperty("--y",y);
+
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+  }
+}
+
+</script>
+
+</body>
+</html>
